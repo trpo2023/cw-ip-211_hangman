@@ -1,8 +1,11 @@
-#include <libhangman/functions.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#include <libhangman/functions.h>
+
 #define MAX_WORD_LEN 9
 
 // Main function to run the game
@@ -29,30 +32,35 @@ int main()
         difficulty = atoi(input);
     } while (difficulty < 1 || difficulty > 4);
 
-    if (difficulty == 1) {
+    switch (difficulty) {
+    case 1:
         max_guesses = 8;
         get_word(word);
         while (strlen(word) != 4) {
             get_word(word);
         }
-    } else if (difficulty == 2) {
+        break;
+    case 2:
         max_guesses = 7;
         get_word(word);
         while (strlen(word) != 5) {
             get_word(word);
         }
-    } else if (difficulty == 3) {
+        break;
+    case 3:
         max_guesses = 5;
         get_word(word);
         while (strlen(word) != 6) {
             get_word(word);
         }
-    } else {
+        break;
+    default:
         max_guesses = 3;
         get_word(word);
         while (strlen(word) != 9) {
             get_word(word);
         }
+        break;
     }
 
     printf("The word has %ld letters. You have %d guesses.\n", strlen(word), max_guesses);
@@ -69,8 +77,12 @@ int main()
         printf("\nWord: %s\n", display_word);
         printf("Guess a letter: ");
         fgets(input, 100, stdin);
-        guess = input[0];
-        // Check if the letter has already been guessed
+        guess = tolower(input[0]);
+        if (!(guess >= 'a' && guess <= 'z')) {
+            printf("Incorrect input! Use english letters.\n");
+            continue;
+        }
+        // Check if the letter has already been used
         if (strchr(guesses, guess) != NULL) {
             printf("You already guessed that letter. Try again.\n");
             printf("Used letters: %s\n", usedlet);
@@ -102,7 +114,7 @@ int main()
         }
 
         // Check if the player has won
-        if (has_won(word, guesses)) {
+        if (is_win(word, guesses)) {
             printf("Congratulations! You won!\n");
             printf("The word was: %s\n", word);
             return 0;

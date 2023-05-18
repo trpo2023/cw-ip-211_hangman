@@ -24,7 +24,7 @@ void get_word(char* word)
 }
 
 // Function to check if the player has won
-int has_won(char* word, char* guesses)
+int is_win(char* word, char* guesses)
 {
     int len = strlen(word);
     for (int i = 0; i < len; i++) {
