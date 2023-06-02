@@ -5,7 +5,7 @@
 #include <time.h>
 
 #define MAX_WORD_LEN 9
-// Function to get a random word
+
 int compare_chars(const void* a, const void* b)
 {
     char char_a = *(const char*)a;
@@ -26,7 +26,6 @@ void get_word(char* word)
         printf("Dictionary is stored 1 word per line.\n");
         exit(1);
     }
-
     // Count the number of words in the file
     int num_words = 0;
     char buffer[MAX_WORD_LEN + 1];
